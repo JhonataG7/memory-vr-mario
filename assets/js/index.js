@@ -25,6 +25,9 @@ const resetBox = document.querySelector("a-box#resetBox");
 const boxTime = document.querySelector("a-box#boxTime");
 let gameTime = document.querySelector("a-text#gameTime");
 
+// >>> NOVO: Variável para o elemento de som (ID: gameMusic, ajustado no HTML)
+const gameMusic = document.querySelector("#gameMusic"); 
+
 // --- Variáveis de Estado do Jogo ---
 let intervalTempo;
 let tempo;
@@ -36,69 +39,69 @@ let errors = 0;
 const cardsDefinitions = [
   {
     src: "img/card-mario.png",
-    title: "Mário",
+    title: "Mario", 
     definition:
-      "O herói bigodudo e saltador, conhecido por seu boné e macacão vermelho. Sua missão é salvar a Princesa Peach do Bowser.",
+      "O heroi bigodudo e saltador, conhecido por seu bone e macacao vermelho. Sua missao e salvar a Princesa Peach do Bowser.", 
   },
   {
     src: "img/card-luigi.png",
     title: "Luigi",
     definition:
-      "Luigi é o irmão do Mario, conhecido por seu chapéu verde e personalidade tímida. Ele frequentemente acompanha Mario em suas aventuras para salvar a Princesa Peach.",
+      "Luigi e o irmao do Mario, conhecido por seu chapeu verde e personalidade timida. Ele frequentemente acompanha Mario em suas aventuras para salvar a Princesa Peach.", 
   },
   {
     src: "img/card-princesa.png",
     title: "Princesa Peach",
     definition:
-      "A benevolente governante do Reino do Cogumelo, frequentemente sequestrada. Ela é conhecida por sua graça e vestes cor-de-rosa.",
+      "A benevolente governante do Reino do Cogumelo, frequentemente sequestrada. Ela e conhecida por sua graca e vestes cor-de-rosa.", 
   },
   {
     src: "img/card-yoshi.png",
     title: "Yoshi",
     definition:
-      "Um dinossauro leal, parceiro de Mario. Ele engole inimigos e pode dar um pulo flutuante para alcançar lugares distantes.",
+      "Um dinossauro leal, parceiro de Mario. Ele engole inimigos e pode dar um pulo flutuante para alcancar lugares distantes.", 
   },
   {
     src: "img/card-toad.png",
     title: "Toad",
     definition:
-      "Toad é um personagem do Reino do Cogumelo, conhecido por sua lealdade e coragem. Ele frequentemente ajuda Mario e seus amigos em suas aventuras.",
+      "Toad e um personagem do Reino do Cogumelo, conhecido por sua lealdade e coragem. Ele frequentemente ajuda Mario e seus amigos em suas aventuras.", 
   },
   {
     src: "img/card-donkey-kong.png",
     title: "Donkey Kong",
     definition:
-      "Um gorila forte, embora originalmente um vilão, se tornou um herói. Ele é especialista em atirar barris e comer bananas.",
+      "Um gorila forte, embora originalmente um vilao, se tornou um heroi. Ele e especialista em atirar barris e comer bananas.", 
   },
   {
     src: "img/card-bowser.png",
     title: "Bowser",
     definition:
-      "Bowser é o principal antagonista da série Mario, conhecido por sequestrar a Princesa Peach e enfrentar Mario em várias aventuras.",
+      "Bowser e o principal antagonista da serie Mario, conhecido por sequestrar a Princesa Peach e enfrentar Mario em varias aventuras.", 
   },
   {
     src: "img/card-goumba.png",
     title: "Goomba",
     definition:
-      "O inimigo mais simples e básico do universo Mario. Um cogumelo marrom que caminha em linha reta e é derrotado com um único pulo.",
+      "O inimigo mais simples e basico do universo Mario. Um cogumelo marrom que caminha em linha reta e e derrotado com um unico pulo.", 
   },
   {
-    src: "img/card-koopa-troopa.png",
+    src: "img/card-koopa-troopa.png", 
     title: "Koopa Troopa",
     definition:
-      "Koopa Troopa é uma tartaruga que aparece frequentemente como inimigo em jogos Mario. Eles geralmente andam em linha reta e podem ser derrotados pulando sobre eles.",
+      "Koopa Troopa e uma tartaruga que aparece frequentemente como inimigo em jogos Mario. Eles geralmente andam em linha reta e podem ser derrotados pulando sobre eles.", 
   },
   {
     src: "img/card-wario.png",
     title: "Wario",
     definition:
-      "Wario é um personagem anti-herói da série Mario, conhecido por sua ganância e rivalidade com Mario. Ele é forte e trapaceiro, frequentemente aparecendo em jogos spin-off.",
+      "Wario e um personagem anti-heroi da serie Mario, conhecido por sua ganancia e rivalidade com Mario. Ele e forte e trapaceiro, frequentemente aparecendo em jogos spin-off.", 
   },
 ];
 
 // --- Configuração e Eventos Iniciais ---
 window.addEventListener("load", () => {
-  // Animação das Estrelas (Mantido, mas fora do escopo de ajustes do jogo principal)
+  // Animação das Estrelas
   setInterval(() => {
     for (let i = 0; i < 4; i++) {
       setTimeout(() => {
@@ -141,8 +144,18 @@ window.addEventListener("load", () => {
     newGame();
   });
 
-  // Adiciona o evento de mouseenter no botão de iniciar
-  gameButton.addEventListener("mouseenter", () => {
+  // Adiciona o evento de CLICK (mais robusto para áudio) no botão de iniciar
+  gameButton.addEventListener("click", () => { // <--- MUDANÇA: 'click' para iniciar jogo e áudio
+    
+    // >>> INICIA A MÚSICA AQUI (Solução Autoplay) <<<
+    // Verifica se o componente 'sound' existe e se a música não está tocando
+    if (gameMusic && gameMusic.components.sound && !gameMusic.components.sound.isPlaying) {
+        // Usa o método playSound() do componente A-Frame Sound
+        gameMusic.components.sound.playSound();
+        console.log("Música iniciada após interação do usuário.");
+    }
+    // ----------------------------------------------------
+    
     gameButton.setAttribute("visible", "false");
     powerIcon.setAttribute("visible", "false");
     title.setAttribute("visible", "false");
@@ -191,9 +204,9 @@ window.addEventListener("load", () => {
 // --- Funções do Jogo ---
 
 /**
- * Anima a remoção dos cards e limpa o container do jogo.
- * @returns {Promise<void>}
- */
+ * Anima a remoção dos cards e limpa o container do jogo.
+ * @returns {Promise<void>}
+ */
 function resetGame() {
   return new Promise((resolve) => {
     // Limpa o display de tempo
@@ -236,8 +249,8 @@ function resetGame() {
 }
 
 /**
- * Inicia um novo jogo.
- */
+ * Inicia um novo jogo.
+ */
 function newGame() {
   // Lista de imagens de cards (20 itens para 10 pares)
   const cardImages = [
@@ -257,9 +270,9 @@ function newGame() {
     "img/card-bowser.png",
     "img/card-goumba.png",
     "img/card-goumba.png",
-    "img/card-koopa-troopa.png", // Mantidos
     "img/card-koopa-troopa.png",
-    "img/card-wario.png", // Mantidos
+    "img/card-koopa-troopa.png",
+    "img/card-wario.png",
     "img/card-wario.png",
   ].sort(() => 0.5 - Math.random()); // Embaralha a lista
 
@@ -273,9 +286,9 @@ function newGame() {
 }
 
 /**
- * Cria os cards A-Frame no gameContainer.
- * @param {string[]} imgs - Array de caminhos de imagem.
- */
+ * Cria os cards A-Frame no gameContainer.
+ * @param {string[]} imgs - Array de caminhos de imagem.
+ */
 function createCards(imgs) {
   const items = [];
 
@@ -330,15 +343,14 @@ function createCards(imgs) {
         tempo = 80;
         clearInterval(intervalTempo); // Garante que não há timer rodando
         addEventoMouse();
-        iniciaTempo(); // O timer agora inicia no primeiro clique, então essa linha foi removida daqui.
       }, 500);
     }
   }, 150);
 }
 
 /**
- * Adiciona o evento de mouseenter para virar o card e verificar pares.
- */
+ * Adiciona o evento de mouseenter para virar o card e verificar pares.
+ */
 function addEventoMouse() {
   let timeoutId;
   // Desabilita todos os eventos anteriores para evitar duplicações
@@ -411,8 +423,8 @@ function addEventoMouse() {
 }
 
 /**
- * Para o timer.
- */
+ * Para o timer.
+ */
 function pararTempo() {
   clearInterval(intervalTempo);
   intervalTempo = undefined;
@@ -422,8 +434,8 @@ function pararTempo() {
 }
 
 /**
- * Inicia o timer do jogo.
- */
+ * Inicia o timer do jogo.
+ */
 function iniciaTempo() {
   // Tempo do Jogo
   intervalTempo = setInterval(() => {
@@ -438,13 +450,13 @@ function iniciaTempo() {
 }
 
 /**
- * Calcula a pontuação final do jogo.
- * @param {number} hits - Número de acertos.
- * @param {number} errors - Número de erros.
- * @param {number} tempoUsado - Tempo restante no final do jogo.
- * @param {number} tempoMaximo - Tempo inicial do jogo.
- * @returns {number} O score calculado.
- */
+ * Calcula a pontuação final do jogo.
+ * @param {number} hits - Número de acertos.
+ * @param {number} errors - Número de erros.
+ * @param {number} tempoUsado - Tempo restante no final do jogo.
+ * @param {number} tempoMaximo - Tempo inicial do jogo.
+ * @returns {number} O score calculado.
+ */
 function calculateScore(hits, errors, tempoUsado, tempoMaximo = 80) {
   // O tempo que foi gasto no jogo é o tempo máximo (80) menos o tempo restante (tempoUsado)
   let tempoGasto = tempoMaximo - tempoUsado;
@@ -461,9 +473,9 @@ function calculateScore(hits, errors, tempoUsado, tempoMaximo = 80) {
 // --- Funções de API e Final de Jogo ---
 
 /**
- * Salva a pontuação do usuário.
- * @param {number} pontos - A pontuação a ser salva.
- */
+ * Salva a pontuação do usuário.
+ * @param {number} pontos - A pontuação a ser salva.
+ */
 function saveScores(pontos) {
   console.log("Pontos a serem salvos:", pontos);
 
@@ -524,8 +536,8 @@ function saveScores(pontos) {
 }
 
 /**
- * Função chamada quando o tempo acaba.
- */
+ * Função chamada quando o tempo acaba.
+ */
 function looseGame() {
   // Esvazia a blackboard
   clearBlackboard();
@@ -573,9 +585,9 @@ function showResetButton() {
 }
 
 /**
- * Preenche a blackboard com a definição do card.
- * @param {AFRAME.Element} card - O card virado.
- */
+ * Preenche a blackboard com a definição do card.
+ * @param {AFRAME.Element} card - O card virado.
+ */
 function writeBlackboard(card) {
   clearBlackboard();
 
@@ -614,8 +626,8 @@ function writeBlackboard(card) {
 }
 
 /**
- * Limpa o conteúdo da blackboard.
- */
+ * Limpa o conteúdo da blackboard.
+ */
 function clearBlackboard() {
   // Remove o texto e o plano de score
   const scorePlane = blackboard.querySelector("a-plane");
@@ -633,9 +645,9 @@ function clearBlackboard() {
 }
 
 /**
- * Aplica o estilo de virar de volta (rotação) após um erro.
- * @param {AFRAME.Element[]} elems - Array com os dois cards para virar.
- */
+ * Aplica o estilo de virar de volta (rotação) após um erro.
+ * @param {AFRAME.Element[]} elems - Array com os dois cards para virar.
+ */
 function addStyle(elems) {
   for (let el of elems) {
     el.setAttribute("animation", {
@@ -656,8 +668,8 @@ function addStyle(elems) {
 }
 
 /**
- * Checa se o jogador venceu.
- */
+ * Checa se o jogador venceu.
+ */
 function chkWin() {
   const cards = document.querySelectorAll(".item");
   // Verifica se todos os cards estão com a cor de acerto
@@ -701,9 +713,9 @@ function chkWin() {
 }
 
 /**
- * Exibe a tela de pontuação na blackboard.
- * @param {number} tempoFinal - O tempo restante ou usado no final do jogo.
- */
+ * Exibe a tela de pontuação na blackboard.
+ * @param {number} tempoFinal - O tempo restante ou usado no final do jogo.
+ */
 function showScore(tempoFinal) {
   clearBlackboard();
   // A opacidade é controlada no looseGame/chkWin, então essa animação é removida.
