@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <title>Memory Game</title>
+  </head>
+  <body style="overflow: hidden;">
+    <a-scene id="cena">
+      
+      <a-entity camera look-controls>
+        <a-entity 
+          cursor="fuse: true; fuseTimeOut: 2000"
+          geometry="primitive: ring; radiusInner: 0.01; radiusOuter: 0.02;" 
+          material="color: gold; shader: flat;"
+          position="0 0 -1"
+          raycaster="objects: .raycastable;"></a-entity>
+      </a-entity>
+      
+            <a-sky src="./assets/fundo_mario.png"></a-sky> 
+      
+      <a-light type="ambient" color="#ffffff" intensity="0.8"></a-light>
+      
+      <a-sound src="ytmp3free.cc_super-mario-bros-theme-song-youtubemp3free.org.mp3" autoplay="true" loop="true" volume="0.5"></a-sound>
+      
+      <a-plane
+        id="initialInterface"
+        position="0 0 -5"
+        width="6"
+        height="3"
+        color="#fff0c7">
+        
+        <a-text
+          id="title"
+          value="Memory Game"
+          position="-2.2 0 0.5"
+          scale="2.8 2.8 1"
+          color="#333"
+          shader="msdf"
+          font="https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/pressstart2p/PressStart2P-Regular.json">
+        </a-text>
+         
+        <a-text
+          id="subTitle"
+          value="Realidade Virtual (VR)"
+          color="#333"
+          position="-2.2 -0.3 0.5"
+          scale="1 0.8 1"
+          shader="msdf"
+          font="https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/abel/Abel-Regular.json">
+        </a-text>
+        
+        <a-entity position="1 0 0">
+          <a-cylinder
+            id="gameButton"
+            position="1.2 -0.8 0"
+            radius="0.3"
+            height="0.5"
+            color="#ccc09f"
+            class="raycastable"
+            rotation="90 0 0">
+            
+            <a-image
+              id="powerIcon"
+              src="img/power-icon.png"
+              position="0 0.3 0"
+              width="0.5"
+              height="0.5"
+              rotation="90 180 0">
+            </a-image>
+          </a-cylinder>  
+        </a-entity>
+        
+      </a-plane>
+      
+      <a-plane
+        id="blackboard"
+        color="#333"
+        width="6"
+        height="4"
+        position="-4 0 -5.3">
+        
+        <a-image
+          src="img/brain-icon.png"
+          width="1.5"
+          height="1.5"
+          position="0 0 1"
+          visible="true">
+        </a-image>
+      </a-plane>
+      
+      <a-box
+          id="boxTime"
+          position="0 7 -10"
+          width="9.5"
+          height="1.5"
+          depth="0.5"
+          color="#d40202"
+          visible="false">
+          
+          <a-text
+            id="gameTime"
+            value="80"
+            position="0.1 -0.7 0.5"
+            align="center"
+            scale="3 3 1"
+            color="#eee"
+            shader="msdf"
+            font="https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/kanit/Kanit-Regular.json">
+          </a-text>
+        </a-box>
+      
+      <a-box
+        id="resetBox"
+        position="0 -7 -10"
+        width="9.3"
+        height="1.5"
+        depth="0.5"
+        color="#5bc202"
+        visible="false">
+
+        <a-image
+          src="img/reset-icon.png"
+          position="0.2 0 0.5"
+          width="1"
+          height="1">
+        </a-image>
+      </a-box>
+      
+      <a-entity id="game-container" position="-1.35 5 -10.5"></a-entity>
+    </a-scene>
+    
+  </body>
+  
+  <script src="./assets/js/index.js"></script>
+</html>
