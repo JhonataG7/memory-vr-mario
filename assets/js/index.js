@@ -44,70 +44,6 @@ if (gameButton && gameMusic) {
   });
 }
 
-// Todas as informações para preencher a blackboard conforme o card específico (10 definições)
-const cardsDefinitions = [
-  {
-    src: "img/card-mario.png",
-    title: "Mario", 
-    definition:
-      "O heroi bigodudo e saltador, conhecido por seu bone e macacao vermelho. Sua missao e salvar a Princesa Peach do Bowser.", 
-  },
-  {
-    src: "img/card-luigi.png",
-    title: "Luigi",
-    definition:
-      "Luigi e o irmao do Mario, conhecido por seu chapeu verde e personalidade timida. Ele frequentemente acompanha Mario em suas aventuras para salvar a Princesa Peach.", 
-  },
-  {
-    src: "img/card-princesa.png",
-    title: "Princesa Peach",
-    definition:
-      "A benevolente governante do Reino do Cogumelo, frequentemente sequestrada. Ela e conhecida por sua graca e vestes cor-de-rosa.", 
-  },
-  {
-    src: "img/card-yoshi.png",
-    title: "Yoshi",
-    definition:
-      "Um dinossauro leal, parceiro de Mario. Ele engole inimigos e pode dar um pulo flutuante para alcancar lugares distantes.", 
-  },
-  {
-    src: "img/card-toad.png",
-    title: "Toad",
-    definition:
-      "Toad e um personagem do Reino do Cogumelo, conhecido por sua lealdade e coragem. Ele frequentemente ajuda Mario e seus amigos em suas aventuras.", 
-  },
-  {
-    src: "img/card-donkey-kong.png",
-    title: "Donkey Kong",
-    definition:
-      "Um gorila forte, embora originalmente um vilao, se tornou um heroi. Ele e especialista em atirar barris e comer bananas.", 
-  },
-  {
-    src: "img/card-bowser.png",
-    title: "Bowser",
-    definition:
-      "Bowser e o principal antagonista da serie Mario, conhecido por sequestrar a Princesa Peach e enfrentar Mario em varias aventuras.", 
-  },
-  {
-    src: "img/card-goumba.png",
-    title: "Goomba",
-    definition:
-      "O inimigo mais simples e basico do universo Mario. Um cogumelo marrom que caminha em linha reta e e derrotado com um unico pulo.", 
-  },
-  {
-    src: "img/card-koopa-troopa.png", 
-    title: "Koopa Troopa",
-    definition:
-      "Koopa Troopa e uma tartaruga que aparece frequentemente como inimigo em jogos Mario. Eles geralmente andam em linha reta e podem ser derrotados pulando sobre eles.", 
-  },
-  {
-    src: "img/card-wario.png",
-    title: "Wario",
-    definition:
-      "Wario e um personagem anti-heroi da serie Mario, conhecido por sua ganancia e rivalidade com Mario. Ele e forte e trapaceiro, frequentemente aparecendo em jogos spin-off.", 
-  },
-];
-
 // --- Configuração e Eventos Iniciais ---
 window.addEventListener("load", () => {
 
@@ -234,29 +170,10 @@ function resetGame() {
  * Inicia um novo jogo.
  */
 function newGame() {
-  // Lista de imagens de cards (20 itens para 10 pares)
-  const cardImages = [
-    "img/card-mario.png",
-    "img/card-mario.png",
-    "img/card-luigi.png",
-    "img/card-luigi.png",
-    "img/card-princesa.png",
-    "img/card-princesa.png",
-    "img/card-yoshi.png",
-    "img/card-yoshi.png",
-    "img/card-toad.png",
-    "img/card-toad.png",
-    "img/card-donkey-kong.png",
-    "img/card-donkey-kong.png",
-    "img/card-bowser.png",
-    "img/card-bowser.png",
-    "img/card-goumba.png",
-    "img/card-goumba.png",
-    "img/card-koopa-troopa.png",
-    "img/card-koopa-troopa.png",
-    "img/card-wario.png",
-    "img/card-wario.png",
-  ].sort(() => 0.5 - Math.random()); // Embaralha a lista
+  // Gera as imagens de cards (20 itens para 10 pares) a partir de cardsDefinitions
+  const cardImages = cardsDefinitions
+  .flatMap(({ src }) => [src, src]) // duplica cada imagem para formar o par
+  .sort(() => 0.5 - Math.random()); // Embaralha a lista
 
   if (gameContainer.innerHTML === "") {
     createCards(cardImages);
