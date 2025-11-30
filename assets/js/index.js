@@ -101,33 +101,6 @@ const cardsDefinitions = [
 
 // --- Configuração e Eventos Iniciais ---
 window.addEventListener("load", () => {
-  // Animação das Estrelas
-  setInterval(() => {
-    for (let i = 0; i < 4; i++) {
-      setTimeout(() => {
-        let star = document.createElement("a-image");
-        star.setAttribute(
-          "src",
-          "https://cdn.glitch.global/b8e6cfee-0fbc-4586-942b-51faad925aa4/star.png?v=1729943176633"
-        );
-        star.setAttribute("width", "3");
-        star.setAttribute("height", "1.5");
-        star.setAttribute("rotation", "0 70 -5");
-        star.setAttribute("position", `-10 ${10 + i * 2} 18`);
-        cena.appendChild(star);
-
-        star.setAttribute("animation", {
-          property: "position",
-          to: "-5 3 -14",
-          dur: 700,
-        });
-
-        setTimeout(() => {
-          star.remove();
-        }, 800);
-      }, i * 400);
-    }
-  }, 10000);
 
   // Adiciona o evento de mouseenter no botão de reset
   resetBox.addEventListener("mouseenter", () => {
