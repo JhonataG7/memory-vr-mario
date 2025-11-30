@@ -35,6 +35,15 @@ let cardBefore = null;
 let hits = 0;
 let errors = 0;
 
+
+if (gameButton && gameMusic) {
+  gameButton.addEventListener("click", function () {
+    if (gameMusic.components && gameMusic.components.sound) {
+      gameMusic.components.sound.playSound();
+    }
+  });
+}
+
 // Todas as informações para preencher a blackboard conforme o card específico (10 definições)
 const cardsDefinitions = [
   {
